@@ -10,11 +10,21 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/blog': {
+        target:'http://127.0.0.1:8081/',
+        // target:'http://47.102.197.42:8080/blog',
+        changeOrigin: true,
+        secure: false, //只有代理https 地址需要次选项
+        pathRewrite: {
+          '^/blog': ''
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8084, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

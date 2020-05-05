@@ -1,5 +1,4 @@
 <template>
-    <div>
       <el-container>
         <el-aside width="30%"></el-aside>
         <el-container >
@@ -9,8 +8,6 @@
           <el-main>Main</el-main>
         </el-container>
       </el-container>
-
-    </div>
 </template>
 
 <script>
