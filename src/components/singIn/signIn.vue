@@ -1,12 +1,12 @@
 <template>
   <div id="app" class="main">
     <div class='login'>
-      <span class="loginSpan">Blog</span>
+      <span class="loginSpan">Login</span>
     </div>
     <div class='content'>
       <div>
-        <router-link to="/login" class="route-btn"  active-class="active">登录</router-link>
-        <router-link to="/register"  class="route-btn"  active-class="active">注册</router-link>
+        <router-link to="/signIn/login" class="route-btn"  active-class="active">登录</router-link>
+        <router-link to="/signIn/register"  class="route-btn"  active-class="active">注册</router-link>
       </div>
       <div class="contentView">
         <router-view></router-view>
@@ -17,7 +17,7 @@
 
 <script>
     export default {
-        name: ""
+        name: "signIn"
     }
 </script>
 
@@ -64,7 +64,6 @@
     top:0;
   }
   .loginSpan{
-    font-size: 25px;
     padding: 15px;
     line-height: 45px;/*让文字内容垂直居中*/
     text-align: center;/*让文字水平居中*/

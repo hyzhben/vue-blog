@@ -12,7 +12,7 @@ let resquest="/blog";
 //处理返回结果
 export function ErrorCodeDeal(res) {
   if(res.data.code == ERR_NO_LOGIN){
-    router.replace({ path: '/login' })
+    router.replace({ path: '/signIn/login' })
     Message.error('请先登录')
   }
   if(res.data.code == ERROR_USER_OR_PASSWORD){

@@ -1,8 +1,7 @@
 <template>
       <el-container>
-        <el-aside width="30%"></el-aside>
         <el-container >
-          <el-header height="10%">
+          <el-header height="100px">
             <Header></Header>
           </el-header>
           <el-main>Main</el-main>
@@ -32,6 +31,7 @@
   .el-header, .el-footer {
     /*background-color: #B3C0D1;*/
     color: #333;
+    background-color: #f4f4f4;
     text-align: center;
     line-height: 60px;
   }
@@ -44,7 +44,6 @@
   }
 
   .el-main {
-    background-color: #f4f4f4;
     color: #333;
     text-align: center;
     line-height: 160px;

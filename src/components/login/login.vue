@@ -28,7 +28,7 @@
           postFormAPI(data)
             .then(res=>{
               if (res.data.code == ERR_OK){
-                      this.$router.push({path:'main'})
+                      this.$router.push({path:'/main'})
               } else{
                 ErrorCodeDeal(res)
               }
