@@ -2,7 +2,7 @@
       <el-container>
         <el-container >
           <el-header height="100px">
-            <Header></Header>
+            <BlogHeader></BlogHeader>
           </el-header>
           <el-main>Main</el-main>
         </el-container>
@@ -10,11 +10,11 @@
 </template>
 
 <script>
-  import Header  from '../../components/header/header'
+  import BlogHeader  from '../blog-header/blog-header'
     export default {
-        name: "main",
+        name: "blog-main",
         components:{
-          Header,
+          BlogHeader,
         }
     }
 </script>
@@ -33,7 +33,6 @@
     color: #333;
     background-color: #f4f4f4;
     text-align: center;
-    line-height: 60px;
   }
 
   .el-aside {

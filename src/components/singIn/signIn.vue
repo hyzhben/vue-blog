@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="main">
+  <div id="app" class="singIn">
     <div class='login'>
       <span class="loginSpan">Login</span>
     </div>
@@ -28,7 +28,7 @@
     height: 100%;
     background-color: #f4f4f4;
   }
-  .main{
+  .singIn{
     position: absolute;
     top: 20%;
     left: 35%;

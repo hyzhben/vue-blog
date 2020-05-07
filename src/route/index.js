@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from '../components/login/login'
 import Register from '../components/register/register'
 import SignIn from '../components/singIn/signIn'
-import Main from '../components/main/main'
+import BlogMain from '../components/blog-main/blog-main'
 Vue.use(Router)
 
 export  default new Router({
@@ -28,7 +28,7 @@ export  default new Router({
     },
     {
       path:'/main',
-      component:Main,
+      component:BlogMain,
     }
   ]
 
