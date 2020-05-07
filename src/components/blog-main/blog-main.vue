@@ -4,17 +4,21 @@
           <el-header height="100px">
             <BlogHeader></BlogHeader>
           </el-header>
-          <el-main>Main</el-main>
+          <el-main>
+            <router-view/>
+          </el-main>
         </el-container>
       </el-container>
 </template>
 
 <script>
   import BlogHeader  from '../blog-header/blog-header'
+  import BlogHome from '../blog-home/blog-home'
     export default {
         name: "blog-main",
         components:{
           BlogHeader,
+          BlogHome
         }
     }
 </script>
@@ -45,7 +49,6 @@
   .el-main {
     color: #333;
     text-align: center;
-    line-height: 160px;
   }
 
   body > .el-container {

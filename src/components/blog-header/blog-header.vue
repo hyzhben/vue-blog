@@ -10,37 +10,42 @@
           <el-col :span="2">
             <div class="grid-content"   @mouseover="enter($event)" @mouseleave ="leave($event)">
               <img class="icon-img" src="./首页.png">
-              <span class="menu-content">首页</span>
+              <router-link to="/main/home" class="route-btn menu-content"  active-class="active">首页</router-link>
             </div>
           </el-col>
           <el-col :span="2">
             <div class="grid-content"  @mouseover="enter($event)" @mouseleave ="leave($event)">
               <img class="icon-img" src="./菜单.png">
-              <span class="menu-content">分类</span>
+<!--              <span class="menu-content">分类</span>-->
+              <router-link to="/main/" class="route-btn menu-content"  active-class="active">分类</router-link>
             </div>
           </el-col>
           <el-col :span="2">
             <div class="grid-content"  @mouseover="enter($event)" @mouseleave ="leave($event)">
               <img class="icon-img" src="./归档.png">
-              <span class="menu-content">归档</span>
+<!--              <span class="menu-content">归档</span>-->
+              <router-link to="/main/file" class="route-btn menu-content"  active-class="active">归档</router-link>
             </div>
           </el-col>
           <el-col :span="2">
             <div class="grid-content"  @mouseover="enter($event)" @mouseleave ="leave($event)">
               <img class="icon-img" src="./日程表.png">
-              <span class="menu-content">日程表</span>
+<!--              <span class="menu-content">日程表</span>-->
+              <router-link to="" class="route-btn menu-content"  active-class="active">日程表</router-link>
             </div>
           </el-col>
           <el-col :span="2">
             <div class="grid-content"  @mouseover="enter($event)" @mouseleave ="leave($event)">
               <img class="icon-img" src="./地图.png">
-              <span class="menu-content">站点地图</span>
+<!--              <span class="menu-content">站点地图</span>-->
+              <router-link to="/main/map" class="route-btn menu-content"  active-class="active">站点地图</router-link>
             </div>
           </el-col>
           <el-col :span="2">
             <div class="grid-content"  @mouseover="enter($event)" @mouseleave ="leave($event)">
               <img class="icon-img" src="./个人.png">
-              <span class="menu-content">关于</span>
+<!--              <span class="menu-content">关于</span>-->
+              <router-link to="main/about" class="route-btn menu-content"  active-class="active">关于</router-link>
             </div>
           </el-col>
         </el-row>
@@ -54,10 +59,10 @@
         name: "blog-header",
       methods:{
           enter(e){
-            addClass(e.currentTarget,"active")
+            addClass(e.currentTarget,"moveActive")
           },
         leave(e){
-          removeClass(e.currentTarget,"active");
+          removeClass(e.currentTarget,"moveActive");
         }
       }
     }
@@ -109,8 +114,20 @@
   .menu-content{
     margin-left: 5px;
     font-size: 15px;
+    color: black;
   }
-  .active{
+  .moveActive{
     background-color: #CCC;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .router-link-active {
+    text-decoration: none;
+  }
+
+  .active{
   }
 </style>
