@@ -7,41 +7,43 @@ const http = {
    * @param url 请求地址
    * @param params 请求参数
    */
-  get(url,params){
+  get(url,params,headers){
     const config={
       method:'get',
       url:url
     }
     if(params) config.params=params
-    return request(config)
+    return request(config,headers)
   },
 
-  post(url,params){
+  post(url,params,headers){
     const config = {
       method:'post',
       url:url
     }
+    if(headers) config.myHeaders=headers
     if(params) config.data=params
     return request(config)
   },
 
-  put(url,params){
+  put(url,params,headers){
     const config = {
       method:'put',
       url:url
     }
     if(params) config.params = params
-    return request(config)
+    return request(config,headers)
   },
 
-  delete(url,params){
+  delete(url,params,headers){
     const config = {
       methods: 'delete',
       url:url
     }
     if(params) config.params = params
-    return request(config)
-  }
+    return request(config,headers)
+  },
+
 }
 //导出
 export default http

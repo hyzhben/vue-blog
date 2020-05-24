@@ -1,133 +1,101 @@
 <template>
-    <div>
-        <el-row class="menu">
-          <el-col :span="5"><div class="grid-content bg-purple title-content">
-            <i class="before-i"></i>
-            <span class="title-content">Blog-skill</span>
-            <i class="after-i"></i>
+  <div>
+    <el-row :gutter="24">
+      <el-col :span="8" >
+          <div class="logo">
+             <i class="before-i" style="margin-bottom: 10px;"></i>
+            <span class="logo-content">Blog-skill</span>
+            <i class="after-i" style="margin-top: 10px"></i>
           </div>
-          </el-col>
-          <el-col :span="2">
-            <div class="grid-content"   @mouseover="enter($event)" @mouseleave ="leave($event)">
-              <img class="icon-img" src="./首页.png">
-              <router-link to="/main/home" class="route-btn menu-content"  active-class="active">首页</router-link>
-            </div>
-          </el-col>
-          <el-col :span="2">
-            <div class="grid-content"  @mouseover="enter($event)" @mouseleave ="leave($event)">
-              <img class="icon-img" src="./菜单.png">
-<!--              <span class="menu-content">分类</span>-->
-              <router-link to="/main/" class="route-btn menu-content"  active-class="active">分类</router-link>
-            </div>
-          </el-col>
-          <el-col :span="2">
-            <div class="grid-content"  @mouseover="enter($event)" @mouseleave ="leave($event)">
-              <img class="icon-img" src="./归档.png">
-<!--              <span class="menu-content">归档</span>-->
-              <router-link to="/main/file" class="route-btn menu-content"  active-class="active">归档</router-link>
-            </div>
-          </el-col>
-          <el-col :span="2">
-            <div class="grid-content"  @mouseover="enter($event)" @mouseleave ="leave($event)">
-              <img class="icon-img" src="./日程表.png">
-<!--              <span class="menu-content">日程表</span>-->
-              <router-link to="" class="route-btn menu-content"  active-class="active">日程表</router-link>
-            </div>
-          </el-col>
-          <el-col :span="2">
-            <div class="grid-content"  @mouseover="enter($event)" @mouseleave ="leave($event)">
-              <img class="icon-img" src="./地图.png">
-<!--              <span class="menu-content">站点地图</span>-->
-              <router-link to="/main/map" class="route-btn menu-content"  active-class="active">站点地图</router-link>
-            </div>
-          </el-col>
-          <el-col :span="2">
-            <div class="grid-content"  @mouseover="enter($event)" @mouseleave ="leave($event)">
-              <img class="icon-img" src="./个人.png">
-<!--              <span class="menu-content">关于</span>-->
-              <router-link to="main/about" class="route-btn menu-content"  active-class="active">关于</router-link>
-            </div>
-          </el-col>
-        </el-row>
-    </div>
+      </el-col>
+      <el-col :span="16">
+        <el-menu
+          :default-active="activeIndex"
+          class="el-menu-demo"
+          mode="horizontal"
+          @select="handleSelect"
+          background-color="#f4f4f4"
+          active-text-color="#808080" router>
+          <el-menu-item index="/main/addArticle">
+            <img class="icon-img" src="./首页.png">  首页
+          </el-menu-item>
+          <el-menu-item index="/main/" >
+            <img class="icon-img" src="./菜单.png">  分类
+          </el-menu-item>
+          <el-menu-item index="/main/file" >
+            <img class="icon-img" src="./归档.png">  归档
+          </el-menu-item>
+          <el-menu-item index="/mian/">
+            <img class="icon-img" src="./日程表.png">  日程表
+          </el-menu-item>
+          <el-menu-item index="/main/map">
+            <img class="icon-img" src="./地图.png">  站点地图
+          </el-menu-item>
+          <el-menu-item index="/main/about">
+            <img class="icon-img" src="./个人.png">  关于
+          </el-menu-item>
+        </el-menu>
+      </el-col>
+    </el-row>
+  </div>
 </template>
-
 <script>
-  import {addClass,removeClass} from "../../common/js/dom";
-
   export default {
-        name: "blog-header",
-      methods:{
-          enter(e){
-            addClass(e.currentTarget,"moveActive")
-          },
-        leave(e){
-          removeClass(e.currentTarget,"moveActive");
-        }
+    data() {
+      return {
+        activeIndex: '/main/addArticle',
+      };
+    },
+    methods: {
+      handleSelect(key, keyPath) {
+        console.log(key, keyPath);
       }
     }
+  }
 </script>
-
 <style scoped>
+
+  .el-menu{
+    margin-top :20px;
+  }
+  .el-menu-item {
+    margin-left: 10px;
+    font-size: 17px;
+  }
+  .el-row {
+    margin-bottom: 20px;
+  }
   .el-col {
     border-radius: 4px;
   }
-  .bg-purple-dark {
-    background: #99a9bf;
+  .logo{
+    float: right;
   }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-    line-height: 40px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-  }
-  .menu{
-    margin-left: 15%;
-    margin-top: 35px;
-  }
-  .title-content{
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 40px;
-  }
-  .before-i,.after-i{
-    display: block;
-    overflow: hidden;
-    margin: 0 auto;
-    width: 100px;
-    position: relative;
-    display: block;
-    height: 2px;
-    background: #222;
-  }
-  .icon-img{
-    width: 15px;
-    height: 15px;
-    vertical-align:middle;
-  }
-  .menu-content{
-    margin-left: 5px;
-    font-size: 15px;
-    color: black;
-  }
-  .moveActive{
-    background-color: #CCC;
+  .el-menu--horizontal{
+    border-bottom: solid 0px;
   }
 
   a {
     text-decoration: none;
   }
 
-  .router-link-active {
-    text-decoration: none;
+  .icon-img{
+    width: 15px;
+    height: 15px;
+    vertical-align:middle;
   }
 
-  .active{
+  .logo{
+    float: right;
+    text-align: center;
+    margin-top: 35px;
+  }
+
+
+  .before-i,.after-i{
+    width: 100px;
+    display: block;
+    height: 2px;
+    background: #222;
   }
 </style>

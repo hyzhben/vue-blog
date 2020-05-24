@@ -12,6 +12,7 @@
 <script>
   import {postFormAPI,ErrorCodeDeal} from "../../api/api";
   import {ERR_OK} from "../../api/config";
+  import qs from 'qs';
 
   export default {
         name: "login",
@@ -25,7 +26,7 @@
         login(){
           const data={ username:this.username,
             password:this.pass}
-          postFormAPI(data)
+          postFormAPI(qs.stringify(data))
             .then(res=>{
               if (res.data.code == ERR_OK){
                       this.$router.push({path:'/main'})

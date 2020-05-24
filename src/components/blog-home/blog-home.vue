@@ -1,8 +1,6 @@
 <template>
-  <div class="mavonEditor">
-    <el-button plain>发表文章<i class="el-icon-upload el-icon--right"></i></el-button>
-    <el-divider></el-divider>
-    <mavon-editor class="editorClass" v-model="value" @save="save"/>
+  <div>
+
   </div>
 </template>
 
@@ -14,11 +12,6 @@
             value:''
           }
         },
-        methods :{
-          save(pos, file){
-            console.log(pos,file,this.value)
-          }
-        }
     }
 </script>
 
