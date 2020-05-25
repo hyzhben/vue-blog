@@ -5,10 +5,10 @@
     <mavon-editor ref="md" class="editorClass"  v-model="value" @save="save" @imgAdd="imgAdd" @imgDel="imgDel"/>
 
     <!-- Form -->
-   <el-dialog title="是否发表文章" :visible.sync="dialogFormVisible" @close="closeDialog">
+   <el-dialog title="是否发表文章" :visible.sync="dialogFormVisible" >
       <el-form :model="form">
         <el-form-item label="文章状态" :label-width="formLabelWidth" style="text-align: left;">
-          <el-select v-model="form.state" placeholder="请选择文章状态" @change="stateSel">
+          <el-select v-model="form.status" placeholder="请选择文章状态" @change="statusSel">
             <el-option label="待发布" value="1000"></el-option>
             <el-option label="发布" value="2000"></el-option>
           </el-select>
@@ -24,7 +24,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelBtn">取 消</el-button>
+        <el-button>取 消</el-button>
         <el-button type="primary" @click="submitArticle">确 定</el-button>
       </div>
     </el-dialog>
@@ -35,6 +35,7 @@
   import {publish,toBepublish,ERR_OK,BASE_IMG_URL} from "../../api/config";
   import {uploadFile,addArticle} from "../../api/api";
   import { Loading } from 'element-ui';
+  import qs from 'qs';
   export default {
       name: "",
       data(){
@@ -45,7 +46,7 @@
           formLabelWidth: '120px',
           form: {
             title: '',
-            state: '',
+            status: '',
             type:'',
           },
           isPublish:false,
@@ -59,7 +60,7 @@
           }
           this.dialogFormVisible=true
         },
-        stateSel(value){
+        statusSel(value){
           if(value == publish){
             this.isPublish = true
           }
@@ -69,11 +70,11 @@
         },
         submitArticle(){
           var that = this
-          if(this.form.state == null || this.form.state == ''){
+          if(this.form.status == null || this.form.status == ''){
             this.$message.error('文章状态不能为空');
             return;
           }
-          if(this.form.state == publish){
+          if(this.form.status == publish){
             if(this.form.title == null || this.form.title == ''){
               this.$message.error('文章标题不能为空');
               return;
@@ -99,7 +100,7 @@
               const result =res.data
               if(result.code == ERR_OK){
                 result.data.forEach((item,index)=>{
-                  that.$refs.md.$img2Url(index+1,BASE_IMG_URL+item)
+                  that.$refs.md.$img2Url(index+1,BASE_IMG_URL+item.fileUrl)
                 })
               }else{
                 this.$message.error('上传图片失败');
@@ -109,16 +110,17 @@
             }).then(res=>{
             if(res.code == ERR_OK){
               let data={
-                content:this.value,
-                state:this.form.state,
+                content:that.value,
+                status:that.form.status,
                 files:res.data
               }
-              if(this.form.state == publish){
-                data.title = this.form.title
-                data.type = this.form.type
+              if(that.form.status == publish){
+                data.title = that.form.title
+                data.type = that.form.type
               }
+              console.log(data)
               //添加文章
-              addArticle(data).then(res=>{
+              addArticle(qs.stringify(data)).then(res=>{
                 const result =res.data
                 if(result.code == ERR_OK){
                   this.$message({
@@ -142,19 +144,16 @@
               loadingInstance.close();
             })
         },
-        cancelBtn(){
-          this.cleanData()
-        },
-        closeDialog(){
+       /* cancelBtn(){
           this.cleanData()
         },
         cleanData(){
           this.dialogFormVisible = false
           this.isPublish = false
           this.form.title = ''
-          this.form.state = ''
+          this.form.status = ''
           this.form.type= ''
-        },
+        },*/
         imgAdd(pos, $file){
           // 缓存图片信息
           this.imgFile[pos] = $file;

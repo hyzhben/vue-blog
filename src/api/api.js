@@ -33,6 +33,6 @@ export function uploadFile(params,headers) {
 
 //文章添加
 export  function addArticle(params){
-  return http.post(`${resquest}/service/blog/addArticle`,params)
+  return http.post(`${resquest}/service/blog/createArticle`,params)
 }
 
