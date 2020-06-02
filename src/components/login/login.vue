@@ -12,6 +12,7 @@
 <script>
   import {postFormAPI,ErrorCodeDeal} from "../../api/api";
   import {ERR_OK} from "../../api/config";
+  import {mapActions} from 'vuex'
   import qs from 'qs';
 
   export default {
@@ -30,13 +31,18 @@
             .then(res=>{
               if (res.data.code == ERR_OK){
                       this.$router.push({path:'/main'})
+                      console.log(res.data.data)
+                this.saveToken(res.data.data)
               } else{
-                ErrorCodeDeal(res)
+                this.$message.error(res.data.msg);
               }
 
             })
             .catch(err => console.log(err))
-        }
+        },
+        ...mapActions([
+          'saveToken'
+        ])
       }
     }
 </script>

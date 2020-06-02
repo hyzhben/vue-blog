@@ -1,5 +1,5 @@
 import http from '../utils/http'
-import {ERR_OK,ERR_NO_LOGIN,ERROR_USER_OR_PASSWORD} from "./config";
+import {ERR_OK,ERR_NO_LOGIN,ERROR_USER_OR_PASSWORD,TOKEN_OVERDUE} from "./config";
 import {Message} from 'element-ui';
 import router from '../route/index'
 /**
@@ -14,9 +14,12 @@ export function ErrorCodeDeal(res) {
   if(res.data.code == ERR_NO_LOGIN){
     router.replace({ path: '/signIn/login' })
     Message.error('请先登录')
+    return;
   }
-  if(res.data.code == ERROR_USER_OR_PASSWORD){
-    Message.error('你输入的用户名或者密码错误')
+  if(res.data.code == TOKEN_OVERDUE){
+    router.replace({ path: '/signIn/login' })
+    Message.error('token过期,请重新登录')
+    return;
   }
 }
 

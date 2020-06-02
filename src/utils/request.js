@@ -2,7 +2,8 @@
 import axios from 'axios';
 //使用element-ui Message做消息提醒
 import {Message} from 'element-ui';
-
+import store from '../store'
+import router from '../route/index'
 //创建新的axios实例
 const service = axios.create({
   //公告接口
@@ -18,9 +19,18 @@ service.interceptors.request.use((config)=>{
   config.headers = {
     'Content-Type':'application/x-www-form-urlencoded'
   }
+
+
+  if(store,store.state.token){
+    const token = {'Authorization':`Bearer ${store.state.token}`}
+    config.headers = Object.assign({},config.headers,token)
+  }
+
   if(config.myHeaders){
     config.headers = Object.assign({},config.headers,config.myHeaders)
   }
+
+  console.log(config.headers)
   // if(token){
   //   config.params = {'token':token}
   // }
@@ -46,6 +56,7 @@ service.interceptors.response.use(response=>{
         break;
       case 401:
         error.message = '未授权，请重新登录'
+        router.replace({ path: '/signIn/login' })
         break;
       case 403:
         error.message = '拒绝访问'

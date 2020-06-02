@@ -33,7 +33,7 @@
 
 <script>
   import {publish,toBepublish,ERR_OK,BASE_IMG_URL} from "../../api/config";
-  import {uploadFile,addArticle} from "../../api/api";
+  import {uploadFile,addArticle,ErrorCodeDeal} from "../../api/api";
   import { Loading } from 'element-ui';
   import qs from 'qs';
   export default {
@@ -87,6 +87,7 @@
           this.dialogFormVisible = false;
 
           var formdata = new FormData();
+
           for(var _img in this.imgFile){
             formdata.append("files", this.imgFile[_img]);
           }
@@ -103,16 +104,17 @@
                   that.$refs.md.$img2Url(index+1,BASE_IMG_URL+item.fileUrl)
                 })
               }else{
-                this.$message.error('上传图片失败');
+                ErrorCodeDeal(res);
                 loadingInstance.close();
               }
               return Promise.resolve(res.data);
             }).then(res=>{
             if(res.code == ERR_OK){
+              console.log(res.data)
               let data={
                 content:that.value,
                 status:that.form.status,
-                files:res.data
+                files:JSON.stringify(res.data)
               }
               if(that.form.status == publish){
                 data.title = that.form.title
@@ -129,11 +131,10 @@
                   });
                   loadingInstance.close();
                 }else{
-                  this.$message.error('上传文章内容失败');
+                  ErrorCodeDeal(res);
                   loadingInstance.close();
                 }
               }) .catch(err => {
-                console.log(err)
                 this.$message.error('上传文章内容失败');
                 loadingInstance.close();
               })
@@ -144,16 +145,6 @@
               loadingInstance.close();
             })
         },
-       /* cancelBtn(){
-          this.cleanData()
-        },
-        cleanData(){
-          this.dialogFormVisible = false
-          this.isPublish = false
-          this.form.title = ''
-          this.form.status = ''
-          this.form.type= ''
-        },*/
         imgAdd(pos, $file){
           // 缓存图片信息
           this.imgFile[pos] = $file;
