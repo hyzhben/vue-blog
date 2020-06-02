@@ -16,7 +16,7 @@
           @select="handleSelect"
           background-color="#f4f4f4"
           active-text-color="#808080" router>
-          <el-menu-item index="/main/addArticle">
+          <el-menu-item index="/main/home">
             <img class="icon-img" src="./首页.png">  首页
           </el-menu-item>
           <el-menu-item index="/main/" >
