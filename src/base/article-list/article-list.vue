@@ -1,19 +1,20 @@
 <template>
-    <el-container style="width: 100%;height: 100%;">
+  <div style="width: 100%;height: 100%;">
+    <el-container class="el-articles"  v-for="(article,index) in articles" :key="index">
       <el-aside width="20%">
         <div>
-          <div style="height: 30px;">
+          <div style="height: 20px;">
             <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
           </div>
-          <div style="height: 30px;"><span class="span-date">06</span></div>
-          <div style="height: 30px;"><span class="span-mon">JUNE</span></div>
-          <div style="height: 30px;"><span class="span-year">2020</span></div>
+          <div style="height: 20px;"><span class="span-date">06</span></div>
+          <div style="height: 20px;"><span class="span-mon">JUNE</span></div>
+          <div style="height: 20px;"><span class="span-year">2020</span></div>
         </div>
       </el-aside>
       <el-main>
         <div>
-          <div class="div-title"><p class="p-title">Debugging CSS Grid Layouts With Firefox Grid Inspector</p></div>
-          <div class="div-title"><p class="p-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...</p></div>
+          <div class="div-title"><p class="p-title">{{article.title}}</p></div>
+          <div class="div-title"><p class="p-content">{{article.content}}</p></div>
           <div class="div-title">
             <i class="el-icon-s-custom" style="color: #999;"></i>
             <span class="span-user">xm</span>
@@ -23,15 +24,26 @@
         </div>
       </el-main>
     </el-container>
+  </div>
 </template>
 
 <script>
     export default {
-        name: "blog-article"
+        name: "article-list",
+      props:{
+          articles:{
+            type:Array,
+            default:[]
+          }
+      }
     }
 </script>
 
 <style scoped>
+  .el-articles{
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
   .el-aside {
     background-color: #383c3d;
     color: #333;

@@ -8,8 +8,8 @@
           </el-carousel-item>
         </el-carousel>
         <el-container>
-          <el-aside width="70%" class="blog-content">
-            <BlogArticle></BlogArticle>
+          <el-aside style="overflow-x: hidden;overflow-y: hidden;" width="70%" class="blog-content">
+            <ArticleList :articles="articles"></ArticleList>
           </el-aside>
           <el-main >待补充</el-main>
         </el-container>
@@ -19,8 +19,12 @@
 </template>
 
 <script>
-  import BlogArticle from '../blog-article/blog-article'
-    export default {
+  import ArticleList from '../../base/article-list/article-list'
+  import {getArtilceList} from "../../api/api";
+  import {ERR_OK,ERR_FAIL} from "../../api/config";
+  import qs from 'qs';
+
+  export default {
         name: "blog-home",
         data(){
           return{
@@ -28,11 +32,39 @@
               'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2421628370,3220857192&fm=26&gp=0.jpg',
             'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2977328465,4015250825&fm=26&gp=0.jpg',
             'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2753861423,1268559091&fm=26&gp=0.jpg'],
+            currentPage1: 5,
+            articles:[{content:'content',title:'title'}],
+            currentPage:1,
+            pageSize:5,
           }
         },
+      mounted(){
+        const data={ pageSize:this.pageSize,
+          currentPage:this.currentPage}
+        getArtilceList(qs.stringify(data)).then(res=>{
+          if (res.data.code == ERR_OK){
+           this.articles = res.data.data.list
+          }else if(res.data.code == ERR_FAIL){
+            this.$message.error(res.data.data);
+          }else{
+            this.$message.error(res.data.msg);
+          }
+
+        })
+          .catch(err => console.log(err))
+
+      },
       components:{
-        BlogArticle,
-      }
+        ArticleList,
+      },
+      methods:{
+        handleSizeChange(val) {
+          console.log(`每页 ${val} 条`);
+        },
+        handleCurrentChange(val) {
+          console.log(`当前页: ${val}`);
+        }
+      },
     }
 </script>
 
@@ -61,6 +93,5 @@
   }
   .blog-content{
     background-color: #f4f4f4;
-    box-shadow:0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
   }
 </style>

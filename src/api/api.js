@@ -39,3 +39,8 @@ export  function addArticle(params){
   return http.post(`${resquest}/service/blog/createArticle`,params)
 }
 
+//获取文章列表
+export  function getArtilceList(params){
+  return http.post(`${resquest}/service/blog/qryBlogArticle`,params)
+}
+
