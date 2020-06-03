@@ -8,7 +8,7 @@
             <i class="after-i" style="margin-top: 10px"></i>
           </div>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="15">
         <el-menu
           :default-active="activeIndex"
           class="el-menu-demo"
@@ -59,8 +59,8 @@
     margin-top :20px;
   }
   .el-menu-item {
-    margin-left: 10px;
-    font-size: 17px;
+    /*margin-left: 10px;*/
+    font-size: 15px;
   }
   .el-row {
     margin-bottom: 20px;

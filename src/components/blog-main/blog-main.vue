@@ -4,7 +4,7 @@
           <el-header height="100px">
             <BlogHeader></BlogHeader>
           </el-header>
-          <el-main>
+          <el-main style="padding: 0px">
             <router-view/>
           </el-main>
         </el-container>
