@@ -1,6 +1,6 @@
 <template>
     <el-container>
-      <el-aside width="20%"></el-aside>
+      <el-aside :width="`${asideWidth}%`"></el-aside>
       <el-main >
         <el-carousel :interval="4000" type="card" height="250px">
           <el-carousel-item v-for="item in picList" :key="item">
@@ -65,7 +65,7 @@
           </el-container>
         </el-container>
       </el-main>
-      <el-aside width="20%"></el-aside>
+      <el-aside :width="`${asideWidth}%`"></el-aside>
     </el-container>
 </template>
 
@@ -91,11 +91,20 @@
             totalArticle:0,
             title:'',
             newestArticleList:[],
+            screenWidth:'',
+            asideWidth:25,
           }
         },
       mounted(){
         this.getArtilces(this.pageSize,this.currentPage);
         this.getNewestArticle();
+        const that = this
+        window.onresize = () => {
+          return (() => {
+            window.screenWidth = document.body.clientWidth
+            that.screenWidth = window.screenWidth
+          })()
+        }
       },
       components:{
         ArticleList,
@@ -140,6 +149,26 @@
             }
           },
     },
+    watch: {
+      screenWidth(val){
+        // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
+        if(!this.timer){
+          // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
+          this.screenWidth = val
+          this.timer = true
+          let that = this
+          setTimeout(function(){
+            // 打印screenWidth变化的值
+            if(that.screenWidth <1450){
+              that.asideWidth = 0
+            }else{
+              that.asideWidth = 25
+            }
+            that.timer = false
+          },400)
+        }
+      }
+    }
   }
 </script>
 
