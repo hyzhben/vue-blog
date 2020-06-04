@@ -4,17 +4,17 @@
       <el-aside width="20%">
         <div>
           <div style="height: 20px;">
-            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+            <el-avatar :src="article.picUrl"></el-avatar>
           </div>
-          <div style="height: 20px;"><span class="span-date">06</span></div>
-          <div style="height: 20px;"><span class="span-mon">JUNE</span></div>
-          <div style="height: 20px;"><span class="span-year">2020</span></div>
+          <div style="height: 20px;"><span class="span-date">{{new Date(article.createTime).getDate()< 10 ? '0' + new Date(article.createTime).getDate() : new Date(article.createTime).getDate()}}</span></div>
+          <div style="height: 20px;"><span class="span-mon">{{getEngMonth(new Date(article.createTime).getMonth())}}</span></div>
+          <div style="height: 20px;"><span class="span-year">{{new Date(article.createTime).getFullYear()}}</span></div>
         </div>
       </el-aside>
       <el-main>
         <div>
           <div class="div-title"><p class="p-title">{{article.title}}</p></div>
-          <div class="div-title"><p class="p-content">{{article.content}}</p></div>
+          <div class="div-title"><p class="p-content">{{article.content.length>164?article.content.substring(0,164)+"...":article.content}}</p></div>
           <div class="div-title">
             <i class="el-icon-s-custom" style="color: #999;"></i>
             <span class="span-user">xm</span>
@@ -28,14 +28,23 @@
 </template>
 
 <script>
-    export default {
+
+  export default {
         name: "article-list",
       props:{
           articles:{
             type:Array,
             default:[]
           }
-      }
+      },
+    computed:{
+        getEngMonth(){
+          return function (month) {
+            var en_mon_arr = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Spt","Oct","Nov","Dec"];  //英文月份
+            return en_mon_arr[month]
+          }
+        }
+    }
     }
 </script>
 

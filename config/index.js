@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/blogApi': {
-        target:'http://127.0.0.1:8081/',
-        // target:'http://47.102.197.42:8080/blog',
+        // target:'http://127.0.0.1:8081/',
+        target:'http://47.102.197.42:8080/blog',
         changeOrigin: true,
         secure: false, //只有代理https 地址需要次选项
         pathRewrite: {

@@ -24,7 +24,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button>取 消</el-button>
+        <el-button @click="cancelSave">取 消</el-button>
         <el-button type="primary" @click="submitArticle">确 定</el-button>
       </div>
     </el-dialog>
@@ -54,6 +54,7 @@
       },
       methods:{
         save(value,render){
+          console.log(value,render)
           if(value == null || value == ''){
             this.$message.error('保存内容不能为空');
             return;
@@ -120,7 +121,6 @@
                 data.title = that.form.title
                 data.type = that.form.type
               }
-              console.log(data)
               //添加文章
               addArticle(qs.stringify(data)).then(res=>{
                 const result =res.data
@@ -153,8 +153,10 @@
         imgDel(pos){
           this.$delete(this.imgFile,pos[0]);
         },
-
-      }
+        cancelSave(){
+          this.dialogFormVisible = false;
+        }
+      },
     }
 </script>
 

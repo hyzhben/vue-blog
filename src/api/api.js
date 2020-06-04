@@ -6,8 +6,8 @@ import router from '../route/index'
  *  @parms resquest 请求地址 例如：http://47.102.197.42:8080/request/...
  *  @param '/testIp'代表vue-cil中config，index.js中配置的代理
  */
-let resquest="/blogApi";
-
+// let resquest="/blogApi";
+let resquest = "http://47.102.197.42:8080/blog"
 
 //处理返回结果
 export function ErrorCodeDeal(res) {
@@ -42,5 +42,10 @@ export  function addArticle(params){
 //获取文章列表
 export  function getArtilceList(params){
   return http.post(`${resquest}/service/blog/qryBlogArticle`,params)
+}
+
+//获取新发布文章
+export  function getNewestArticle(params){
+  return http.post(`${resquest}/service/blog/qryNewestArticle`,params)
 }
 

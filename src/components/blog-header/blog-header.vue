@@ -19,7 +19,7 @@
           <el-menu-item index="/main/home">
             <img class="icon-img" src="./首页.png">  首页
           </el-menu-item>
-          <el-menu-item index="/main/" >
+          <el-menu-item index="/main/addArticle" >
             <img class="icon-img" src="./菜单.png">  分类
           </el-menu-item>
           <el-menu-item index="/main/file" >
@@ -43,7 +43,7 @@
   export default {
     data() {
       return {
-        activeIndex: '/main/addArticle',
+        activeIndex: '/main/home',
       };
     },
     methods: {
