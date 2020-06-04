@@ -9,7 +9,7 @@
         </el-carousel>
         <el-container>
           <el-container>
-            <el-aside style="overflow-x: hidden;overflow-y: hidden;" width="65%" class="blog-content" v-show="articles.length">
+            <el-aside :style="`height:${elMainclientHeight>0?elMainclientHeight+'px':'100%'}`" width="65%"  class="blog-content" v-show="articles.length">
               <div>
                 <ArticleList :articles="articles"></ArticleList>
               </div>
@@ -24,7 +24,7 @@
               </div>
             </el-aside>
             <div>
-              <el-main style="height: 100%;" ref="elMain">
+              <el-main :style="`height:${elMainclientHeight>0?elMainclientHeight:'100%'}`" ref="elMain">
               <el-container style="line-height: 0px;">
                   <el-header>
                     <el-input placeholder="请输入标题" v-model="title" class="input-with-select">
@@ -93,11 +93,13 @@
             newestArticleList:[],
             screenWidth:'',
             asideWidth:25,
+            elMainclientHeight:0,
           }
         },
       mounted(){
         this.getArtilces(this.pageSize,this.currentPage);
         this.getNewestArticle();
+        this.setScreenWidth();
         const that = this
         window.onresize = () => {
           return (() => {
@@ -111,6 +113,15 @@
         NoResult,
       },
       methods:{
+        setScreenWidth(){
+          const screenWidth = document.body.clientWidth;
+          console.log(screenWidth)
+          if(screenWidth <1450){
+            this.asideWidth = 0
+          }else{
+            this.asideWidth = 25
+          }
+        },
         handleCurrentChange(currentPage) {
           this.getArtilces(this.pageSize,currentPage);
         },
@@ -167,6 +178,17 @@
             that.timer = false
           },400)
         }
+      },
+      currentPage(val){
+        if(!this.timer){
+          this.timer = true
+          let that = this
+          setTimeout(function(){
+            // 打印screenWidth变化的值
+            that.elMainclientHeight = that.$refs.elMain.$el.clientHeight;
+            that.timer = false
+          },500)
+        }
       }
     }
   }
@@ -197,6 +219,8 @@
   }
   .blog-content{
     background-color: #f4f4f4;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
   .pagination{
     margin-top: 50px;
