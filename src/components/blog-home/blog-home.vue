@@ -1,36 +1,35 @@
 <template>
-    <el-container>
-      <el-aside :width="`${asideWidth}%`"></el-aside>
-      <el-main >
-        <el-carousel :interval="4000" type="card" height="250px">
-          <el-carousel-item v-for="item in picList" :key="item">
-            <img :src="item" style="width: 100%;height: 100%"></img>
-          </el-carousel-item>
-        </el-carousel>
+  <el-container>
+    <el-aside :width="`${asideWidth}%`"></el-aside>
+    <el-main >
+      <el-carousel :interval="4000" type="card" height="250px">
+        <el-carousel-item v-for="item in picList" :key="item">
+          <img :src="item" style="width: 100%;height: 100%"></img>
+        </el-carousel-item>
+      </el-carousel>
+      <el-container>
         <el-container>
-          <el-container>
-            <el-aside :style="`height:${elMainclientHeight>0?elMainclientHeight+'px':'100%'}`" width="65%"  class="blog-content" v-show="articles.length">
-              <div>
-                <ArticleList :articles="articles"></ArticleList>
-              </div>
-              <div>
-                <el-pagination class="pagination"
-                               @current-change="handleCurrentChange"
-                               :current-page.sync="currentPage"
-                               :page-size="pageSize"
-                               layout="total, prev, pager, next"
-                               :total="totalArticle" v-show="articles.length>0">
-                </el-pagination>
-              </div>
-            </el-aside>
+          <el-aside ref="elAside" width="65%"   class="blog-content" v-show="articles.length">
             <div>
-              <el-main :style="`height:${elMainclientHeight>0?elMainclientHeight:'100%'}`" ref="elMain">
+              <ArticleList :articles="articles"></ArticleList>
+            </div>
+            <div>
+              <el-pagination class="pagination"
+                             @current-change="handleCurrentChange"
+                             :current-page.sync="currentPage"
+                             :page-size="pageSize"
+                             layout="total, prev, pager, next"
+                             :total="totalArticle" v-show="articles.length>0">
+              </el-pagination>
+            </div>
+          </el-aside>
+            <el-main  :style="`height:${elAsideClineHeight>0?(elAsideClineHeight+250)+'px':'100%'}`">
               <el-container style="line-height: 0px;">
-                  <el-header>
-                    <el-input placeholder="请输入标题" v-model="title" class="input-with-select">
-                      <el-button slot="append" icon="el-icon-search"></el-button>
-                    </el-input>
-                  </el-header>
+                <el-header>
+                  <el-input placeholder="请输入标题" v-model="title" class="input-with-select">
+                    <el-button slot="append" icon="el-icon-search"></el-button>
+                  </el-input>
+                </el-header>
                 <el-main>
                   <el-card class="box-card">
                     <div slot="header" class="clearfix tip-title">
@@ -43,30 +42,29 @@
                   </el-card>
                 </el-main>
                 <el-footer>
-                    <el-card class="box-card">
-                      <div slot="header" class="clearfix tip-title">
-                        <span>分类标签</span>
-                      </div>
-                      <div class="lab-type">
-                        <el-tag type="info">c++</el-tag>
-                        <el-tag type="info">java</el-tag>
-                        <el-tag type="info">mybatis</el-tag>
-                        <el-tag type="info">oracle</el-tag>
-                        <el-tag type="info">标签二</el-tag>
-                        <el-tag type="info">标签三</el-tag>
-                        <el-tag type="info">标签四</el-tag>
-                        <el-tag type="info">标签五</el-tag>
-                      </div>
-                    </el-card>
+                  <el-card class="box-card">
+                    <div slot="header" class="clearfix tip-title">
+                      <span>分类标签</span>
+                    </div>
+                    <div class="lab-type">
+                      <el-tag type="info">c++</el-tag>
+                      <el-tag type="info">java</el-tag>
+                      <el-tag type="info">mybatis</el-tag>
+                      <el-tag type="info">oracle</el-tag>
+                      <el-tag type="info">标签二</el-tag>
+                      <el-tag type="info">标签三</el-tag>
+                      <el-tag type="info">标签四</el-tag>
+                      <el-tag type="info">标签五</el-tag>
+                    </div>
+                  </el-card>
                 </el-footer>
               </el-container>
             </el-main>
-            </div>
-          </el-container>
         </el-container>
-      </el-main>
-      <el-aside :width="`${asideWidth}%`"></el-aside>
-    </el-container>
+      </el-container>
+    </el-main>
+    <el-aside :width="`${asideWidth}%`"></el-aside>
+  </el-container>
 </template>
 
 <script>
@@ -78,87 +76,87 @@
   import {formatConversion} from "../../utils/dateUtil";
 
   export default {
-        name: "blog-home",
-        data(){
-          return{
-            picList:['https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1924821779,65256901&fm=26&gp=0.jpg',
-              'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2421628370,3220857192&fm=26&gp=0.jpg',
-            'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2977328465,4015250825&fm=26&gp=0.jpg',
-            'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2753861423,1268559091&fm=26&gp=0.jpg'],
-            articles:[],
-            currentPage:1,
-            pageSize:5,
-            totalArticle:0,
-            title:'',
-            newestArticleList:[],
-            screenWidth:'',
-            asideWidth:25,
-            elMainclientHeight:0,
-          }
-        },
-      mounted(){
-        this.getArtilces(this.pageSize,this.currentPage);
-        this.getNewestArticle();
-        this.setScreenWidth();
-        const that = this
-        window.onresize = () => {
-          return (() => {
-            window.screenWidth = document.body.clientWidth
-            that.screenWidth = window.screenWidth
-          })()
+    name: "blog-home",
+    data(){
+      return{
+        picList:['https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1924821779,65256901&fm=26&gp=0.jpg',
+          'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2421628370,3220857192&fm=26&gp=0.jpg',
+          'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2977328465,4015250825&fm=26&gp=0.jpg',
+          'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2753861423,1268559091&fm=26&gp=0.jpg'],
+        articles:[],
+        currentPage:1,
+        pageSize:5,
+        totalArticle:0,
+        title:'',
+        newestArticleList:[],
+        screenWidth:'',
+        asideWidth:25,
+        elAsideClineHeight:0,
+      }
+    },
+    mounted(){
+      this.getArtilces(this.pageSize,this.currentPage);
+      this.getNewestArticle();
+      this.setScreenWidth();
+      const that = this
+      window.onresize = () => {
+        return (() => {
+          window.screenWidth = document.body.clientWidth
+          that.screenWidth = window.screenWidth
+        })()
+      }
+    },
+    components:{
+      ArticleList,
+      NoResult,
+    },
+    methods:{
+      setScreenWidth(){
+        const screenWidth = document.body.clientWidth;
+        console.log(screenWidth)
+        if(screenWidth <1450){
+          this.asideWidth = 0
+        }else{
+          this.asideWidth = 25
         }
       },
-      components:{
-        ArticleList,
-        NoResult,
+      handleCurrentChange(currentPage) {
+        this.getArtilces(this.pageSize,currentPage);
       },
-      methods:{
-        setScreenWidth(){
-          const screenWidth = document.body.clientWidth;
-          console.log(screenWidth)
-          if(screenWidth <1450){
-            this.asideWidth = 0
+      getArtilces(pageSize,currentPage){
+        const data={ pageSize:pageSize,
+          currentPage:currentPage}
+        getArtilceList(qs.stringify(data)).then(res=>{
+          if (res.data.code == ERR_OK){
+            this.articles = res.data.data.list;
+            this.totalArticle = res.data.data.total;
+          }else if(res.data.code == ERR_FAIL){
+            this.$message.error(res.data.data);
           }else{
-            this.asideWidth = 25
+            this.$message.error(res.data.msg);
           }
-        },
-        handleCurrentChange(currentPage) {
-          this.getArtilces(this.pageSize,currentPage);
-        },
-        getArtilces(pageSize,currentPage){
-          const data={ pageSize:pageSize,
-            currentPage:currentPage}
-          getArtilceList(qs.stringify(data)).then(res=>{
-            if (res.data.code == ERR_OK){
-              this.articles = res.data.data.list;
-              this.totalArticle = res.data.data.total;
-            }else if(res.data.code == ERR_FAIL){
-              this.$message.error(res.data.data);
-            }else{
-              this.$message.error(res.data.msg);
-            }
 
-          })
-            .catch(err => console.log(err))
-        },
-        getNewestArticle(){
-          getNewestArticle().then(res=>{
-            if (res.data.code == ERR_OK){
-              this.newestArticleList=res.data.data
-            }else if(res.data.code == ERR_FAIL){
-              this.$message.error(res.data.data);
-            }else {
-              this.$message.error(res.data.msg);
-            }
-            }).catch(err => console.log(err))
+        })
+          .catch(err => console.log(err))
+      },
+      getNewestArticle(){
+        getNewestArticle().then(res=>{
+          if (res.data.code == ERR_OK){
+            this.newestArticleList=res.data.data
+          }else if(res.data.code == ERR_FAIL){
+            this.$message.error(res.data.data);
+          }else {
+            this.$message.error(res.data.msg);
+          }
+        }).catch(err => console.log(err))
+      }
+    },
+    computed:{
+      getFormatDate(){
+        return function (date) {
+          return formatConversion(date);
         }
       },
-    computed:{
-          getFormatDate(){
-            return function (date) {
-              return formatConversion(date);
-            }
-          },
     },
     watch: {
       screenWidth(val){
@@ -183,11 +181,12 @@
         if(!this.timer){
           this.timer = true
           let that = this
+          that.elAsideClineHeight=0
           setTimeout(function(){
             // 打印screenWidth变化的值
-            that.elMainclientHeight = that.$refs.elMain.$el.clientHeight;
+            that.elAsideClineHeight = that.$refs.elAside.$el.clientHeight;
             that.timer = false
-          },500)
+          },400)
         }
       }
     }
@@ -221,6 +220,7 @@
     background-color: #f4f4f4;
     overflow-x: hidden;
     overflow-y: hidden;
+
   }
   .pagination{
     margin-top: 50px;
