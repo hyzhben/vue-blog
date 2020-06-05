@@ -11,7 +11,7 @@
         <el-container>
           <el-aside ref="elAside" width="65%"   class="blog-content" v-show="articles.length">
             <div>
-              <ArticleList :articles="articles"></ArticleList>
+              <ArticleList @select="selectArticle" :articles="articles"></ArticleList>
             </div>
             <div>
               <el-pagination class="pagination"
@@ -35,7 +35,7 @@
                     <div slot="header" class="clearfix tip-title">
                       <span>最近发布文章</span>
                     </div>
-                    <div v-for="(article,index) in newestArticleList" :key="index" class="text item">
+                    <div v-for="(article,index) in newestArticleList" :key="index" class="text item" @click="selectArticle(article)">
                       <el-link type="primary el-title">{{article.title}}</el-link>
                       <div class="div-date">{{getFormatDate(article.createTime)}}</div>
                     </div>
@@ -74,6 +74,7 @@
   import qs from 'qs';
   import NoResult from '../../base/no-result/no-result'
   import {formatConversion} from "../../utils/dateUtil";
+  import {mapActions} from 'vuex'
 
   export default {
     name: "blog-home",
@@ -149,7 +150,20 @@
             this.$message.error(res.data.msg);
           }
         }).catch(err => console.log(err))
-      }
+      },
+      selectArticle(article){
+        if(!article.articleId){
+          this.$router.push('/main')
+          return
+        }
+        this.setArticle(article)
+        this.$router.push({
+          path:`/main/articleDetail/${article.articleId}`
+        })
+      },
+      ...mapActions([
+        'setArticle',
+      ]),
     },
     computed:{
       getFormatDate(){

@@ -6,6 +6,7 @@ import SignIn from '../components/singIn/signIn'
 import BlogMain from '../components/blog-main/blog-main'
 import BlogHome from '../components/blog-home/blog-home'
 import BlogAddArticle from '../components/blog-addArticle/blog-addArticle'
+import ArticleDetail from '../components/article-detail/article-detail'
 Vue.use(Router)
 
 export  default new Router({
@@ -39,6 +40,10 @@ export  default new Router({
         {
           path:'/main/addArticle',
           component:BlogAddArticle
+        },
+        {
+          path:'/main/articleDetail/:id',
+          component:ArticleDetail
         }
       ],
     }

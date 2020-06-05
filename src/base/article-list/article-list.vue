@@ -12,7 +12,7 @@
         </div>
       </el-aside>
       <el-main>
-        <div>
+        <div @click="selectArticle(article)">
           <div class="div-title"><p class="p-title">{{article.title}}</p></div>
           <div class="div-title"><p class="p-content">{{article.content.length>164?article.content.substring(0,164)+"...":article.content}}</p></div>
           <div class="div-title">
@@ -44,6 +44,11 @@
             return en_mon_arr[month]
           }
         }
+    },
+    methods:{
+      selectArticle(article){
+        this.$emit('select',article);
+      }
     }
     }
 </script>
@@ -62,6 +67,7 @@
 
   .el-main {
     background-color: #E9EEF3;
+    /*background-color:#DCDCDC;*/
     color: #333;
     margin-top: 0px;
     padding: 0px;
