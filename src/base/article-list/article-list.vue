@@ -12,8 +12,8 @@
         </div>
       </el-aside>
       <el-main>
-        <div @click="selectArticle(article)">
-          <div class="div-title"><p class="p-title">{{article.title}}</p></div>
+        <div @click="selectArticle(article)"   @mouseenter="enter(index)" @mouseleave="leave(index)" >
+          <div class="div-title"><p class="p-title" :class="[currentIdx==index?'checkedItemBg':'']">{{article.title}}</p></div>
           <div class="div-title"><p class="p-content">{{article.content.length>164?article.content.substring(0,164)+"...":article.content}}</p></div>
           <div class="div-title">
             <i class="el-icon-s-custom" style="color: #999;"></i>
@@ -37,17 +37,28 @@
             default:[]
           }
       },
+    data(){
+          return{
+            currentIdx:-1,
+          }
+    },
     computed:{
         getEngMonth(){
           return function (month) {
             var en_mon_arr = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Spt","Oct","Nov","Dec"];  //英文月份
             return en_mon_arr[month]
           }
-        }
+        },
     },
     methods:{
       selectArticle(article){
         this.$emit('select',article);
+      },
+      enter(index){
+        this.currentIdx = index;
+      },
+      leave(index){
+        this.currentIdx = -1;
       }
     }
     }
@@ -66,8 +77,9 @@
   }
 
   .el-main {
-    background-color: #E9EEF3;
+    /*background-color: #E9EEF3;*/
     /*background-color:#DCDCDC;*/
+    background-color:#ffffff;
     color: #333;
     margin-top: 0px;
     padding: 0px;
@@ -106,5 +118,10 @@
   .span-user{
     color: #999;
   }
-
+  .checkedItemBg{
+    /*background:gainsboro;*/
+    /*background:	#BEBEBE;*/
+    /*text-decoration:underline;*/
+    color:#1E90FF;
+  }
 </style>
